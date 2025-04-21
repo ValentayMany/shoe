@@ -457,7 +457,7 @@ class _RegisterState extends State<Register> {
                         margin: EdgeInsets.only(right: 10),
                         child: IconButton(
                           icon: Icon(
-                            _registerC.isPasswordHidden.value
+                            _registerC.isConfirmPasswordHidden.value
                                 ? Icons.visibility_off
                                 : Icons.visibility,
                             color: Color(0xFF19D784),
