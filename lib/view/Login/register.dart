@@ -1,0 +1,539 @@
+import 'package:app_shoe/controller/register_c.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+
+class Register extends StatefulWidget {
+  const Register({super.key});
+
+  @override
+  State<Register> createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+  final _registerC = Get.put(RegisterC());
+  String _selectedGender = 'Male';
+  Widget customRadio(String gender) {
+    final isSelected = _selectedGender == gender;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedGender = gender;
+          _registerC.genderc.text = gender;
+        });
+      },
+      child: Row(
+        children: [
+          Text(gender),
+          SizedBox(width: 5),
+          Container(
+            width: 25,
+            height: 25,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.grey[300],
+            ),
+            child: Center(
+              child: Container(
+                width: 20,
+                height: 20,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient:
+                      isSelected
+                          ? LinearGradient(
+                            colors: [Color(0xFF19D784), Color(0xFF16A886)],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          )
+                          : null,
+                  color: isSelected ? null : Colors.grey.shade300,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(width: 15),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var Size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Logo
+              Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 10, left: 10),
+                    width: 60,
+                    height: 70,
+                    child: Image.asset('images/TUV.png', fit: BoxFit.contain),
+                  ),
+                ],
+              ),
+              //Title
+              Container(
+                child: Text(
+                  'Register',
+                  style: TextStyle(
+                    color: Color(0xFF19D784),
+                    fontSize: Size.width * 0.09,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              SizedBox(height: 40),
+              //TextField for Phone
+              Obx(
+                () => Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    controller: _registerC.phonec,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    onChanged: (value) {
+                      _registerC.validatePhone(); // เรียกฟังก์ชันเช็คเบอร์
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Phone',
+                      labelStyle: TextStyle(
+                        color: Color(0xFF000000).withOpacity(0.3),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: Color(0xFF19D784),
+                          width: 2,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: Color(0xFF19D784),
+                          width: 2,
+                        ),
+                      ),
+                      contentPadding: EdgeInsets.all(20),
+                      errorText:
+                          _registerC.phoneError.value == ''
+                              ? null
+                              : _registerC.phoneError.value,
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 30),
+              //TextField for Email
+              Obx(
+                () => Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    controller: _registerC.emailc,
+                    keyboardType: TextInputType.emailAddress,
+                    onChanged: (value) {
+                      _registerC.validateEmail();
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      labelStyle: TextStyle(
+                        color: Color(0xFF000000).withOpacity(0.3),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: Color(0xFF19D784),
+                          width: 2,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: Color(0xFF19D784),
+                          width: 2,
+                        ),
+                      ),
+                      contentPadding: EdgeInsets.all(20),
+                      errorText:
+                          _registerC.emailError.value == ''
+                              ? null
+                              : _registerC.emailError.value,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 30),
+              //TextField for FirstName
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                child: TextField(
+                  controller: _registerC.firstnamec,
+                  decoration: InputDecoration(
+                    labelText: 'FirstName',
+                    labelStyle: TextStyle(
+                      color: Color(0xFF000000).withOpacity(0.3),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Color(0xFF19D784),
+                        width: 2,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Color(0xFF19D784),
+                        width: 2,
+                      ),
+                    ),
+                    contentPadding: EdgeInsets.all(20),
+                  ),
+                ),
+              ),
+              SizedBox(height: 30),
+              //TextField for LastName
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                child: TextField(
+                  controller: _registerC.lastnamec, //null,
+                  decoration: InputDecoration(
+                    labelText: 'LastName',
+                    labelStyle: TextStyle(
+                      color: Color(0xFF000000).withOpacity(0.3),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Color(0xFF19D784),
+                        width: 2,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Color(0xFF19D784),
+                        width: 2,
+                      ),
+                    ),
+                    contentPadding: EdgeInsets.all(20),
+                  ),
+                ),
+              ),
+              SizedBox(height: 30),
+              //Redio Gengder
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Gender :',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    customRadio("Male"),
+                    customRadio("Female"),
+                  ],
+                ),
+              ),
+              SizedBox(height: 30),
+              //BirthDay
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // เลือกวัน
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Size.width * 0.02,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Color(0xFF19D784), width: 2),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: DropdownButton(
+                        value: _registerC.selectedDay,
+                        hint: Padding(
+                          padding: EdgeInsets.only(right: 8.0),
+                          child: Text("DD"),
+                        ),
+                        underline: SizedBox(),
+                        icon: Image.asset('images/icons/Arrow.png'),
+                        items:
+                            _registerC.days.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _registerC.selectedDay = newValue;
+                            _registerC.birthdayc.text =
+                                '${_registerC.selectedDay ?? ''}-${_registerC.selectedMonth ?? ''}-${_registerC.selectedYear ?? ''}';
+                          });
+                        },
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    // เลือกเดือน
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Size.width * 0.04,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Color(0xFF19D784), width: 2),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: DropdownButton(
+                        value: _registerC.selectedMonth,
+                        hint: Text("Month"),
+                        alignment: AlignmentDirectional.center,
+                        underline: SizedBox(),
+                        icon: Image.asset('images/icons/Arrow.png'),
+                        items:
+                            _registerC.months.asMap().entries.map((entry) {
+                              int index = entry.key; // ดัชนีของเดือน
+                              String monthName = entry.value; // ชื่อเดือน
+                              String monthNumber = (index + 1)
+                                  .toString()
+                                  .padLeft(2, '0'); // แปลงเป็นเลข
+                              return DropdownMenuItem<String>(
+                                value: monthNumber, // เก็บค่าเป็นตัวเลข
+                                child: Text(monthName), // แสดงชื่อเดือน
+                              );
+                            }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _registerC.selectedMonth = newValue;
+                            _registerC.birthdayc.text =
+                                '${_registerC.selectedDay ?? ''}-${_registerC.selectedMonth ?? ''}-${_registerC.selectedYear ?? ''}';
+                          });
+                        },
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    // เลือกปี
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Size.width * 0.03,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Color(0xFF19D784), width: 2),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: DropdownButton(
+                        value: _registerC.selectedYear,
+                        hint: Padding(
+                          padding: EdgeInsets.only(right: 8.0),
+                          child: Text("YYYY"),
+                        ),
+                        underline: SizedBox(),
+                        icon: Image.asset('images/icons/Arrow.png'),
+                        items:
+                            _registerC.years.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _registerC.selectedYear = newValue;
+                            _registerC.birthdayc.text =
+                                '${_registerC.selectedDay ?? ''}-${_registerC.selectedMonth ?? ''}-${_registerC.selectedYear ?? ''}';
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 30),
+
+              //TextField for Password
+              Obx(
+                () => Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    controller: _registerC.passwordc,
+                    obscureText: _registerC.isPasswordHidden.value,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      labelStyle: TextStyle(
+                        color: Color(0xFF000000).withOpacity(0.3),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: Color(0xFF19D784),
+                          width: 2,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: Color(0xFF19D784),
+                          width: 2,
+                        ),
+                      ),
+                      contentPadding: EdgeInsets.all(20),
+                      suffixIcon: Container(
+                        margin: EdgeInsets.only(right: 10),
+                        child: IconButton(
+                          icon: Icon(
+                            _registerC.isPasswordHidden.value
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Color(0xFF19D784),
+                          ),
+                          onPressed: _registerC.togglePasswordVisibility,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 30),
+
+              //TextField for Password Confirm
+              Obx(
+                () => Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    controller: _registerC.confirmPasswordc,
+                    obscureText: _registerC.isConfirmPasswordHidden.value,
+                    onChanged: (value) => _registerC.validatePasswordMatch(),
+
+                    decoration: InputDecoration(
+                      labelText: 'Password Confirm',
+                      labelStyle: TextStyle(
+                        color: Color(0xFF000000).withOpacity(0.3),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: Color(0xFF19D784),
+                          width: 2,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: Color(0xFF19D784),
+                          width: 2,
+                        ),
+                      ),
+                      contentPadding: EdgeInsets.all(20),
+                      suffixIcon: Container(
+                        margin: EdgeInsets.only(right: 10),
+                        child: IconButton(
+                          icon: Icon(
+                            _registerC.isPasswordHidden.value
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Color(0xFF19D784),
+                          ),
+                          onPressed: _registerC.toggleConfirmPasswordVisibility,
+                        ),
+                      ),
+                      errorText:
+                          _registerC.confirmPasswordError.value == ''
+                              ? null
+                              : _registerC.confirmPasswordError.value,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 30),
+              //Button Register
+              Container(
+                width: Size.width * 0.75,
+                height: 40,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF19D784), Color(0xFF16A886)],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: ElevatedButton(
+                  onPressed: _registerC.register,
+                  child: Text(
+                    'ລົງທະບຽນ',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              // link to welcome
+              Container(
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "ເຈົ້າມີບັນຊີບໍ່? ",
+                      style: TextStyle(color: Colors.black87, fontSize: 14),
+                    ),
+                    InkWell(
+                      onTap: _registerC.towelcome,
+                      child: Text(
+                        "ເຂົ້າສູ່ລະບົບ",
+                        style: TextStyle(
+                          color: Color(0xFF19D784),
+                          fontSize: 14,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
