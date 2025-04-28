@@ -96,7 +96,7 @@ class _WelcomeState extends State<Welcome> {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   child: TextField(
-                    controller: _loginC.profilec,
+                    controller: _loginC.emailPhoneController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       labelText: 'Phone OR Email',
@@ -126,7 +126,7 @@ class _WelcomeState extends State<Welcome> {
                         child: IconButton(
                           icon: Image.asset('images/icons/close.png'),
                           onPressed: () {
-                            _loginC.passwordc.clear();
+                            _loginC.emailPhoneController.clear();
                           },
                         ),
                       ),
@@ -139,7 +139,7 @@ class _WelcomeState extends State<Welcome> {
                   () => Container(
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     child: TextField(
-                      controller: _loginC.passwordc,
+                      controller: _loginC.passwordController,
                       obscureText: _loginC.isPasswordHidden.value,
                       decoration: InputDecoration(
                         labelText: 'Password',
@@ -252,7 +252,7 @@ class _WelcomeState extends State<Welcome> {
                         style: TextStyle(color: Colors.black87, fontSize: 14),
                       ),
                       InkWell(
-                        onTap: _loginC.toregister,
+                        onTap: _loginC.navigateToRegister,
                         child: Text(
                           "ລົງທະບຽນ",
                           style: TextStyle(

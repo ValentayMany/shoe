@@ -19,7 +19,7 @@ class _RegisterState extends State<Register> {
       onTap: () {
         setState(() {
           _selectedGender = gender;
-          _registerC.genderc.text = gender;
+          _registerC.genderController.text = gender;
         });
       },
       child: Row(
@@ -94,7 +94,7 @@ class _RegisterState extends State<Register> {
                 () => Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   child: TextField(
-                    controller: _registerC.phonec,
+                    controller: _registerC.phoneController,
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     onChanged: (value) {
@@ -138,7 +138,7 @@ class _RegisterState extends State<Register> {
                 () => Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   child: TextField(
-                    controller: _registerC.emailc,
+                    controller: _registerC.emailController,
                     keyboardType: TextInputType.emailAddress,
                     onChanged: (value) {
                       _registerC.validateEmail();
@@ -179,7 +179,7 @@ class _RegisterState extends State<Register> {
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
                 child: TextField(
-                  controller: _registerC.firstnamec,
+                  controller: _registerC.firstNameController,
                   decoration: InputDecoration(
                     labelText: 'FirstName',
                     labelStyle: TextStyle(
@@ -211,7 +211,7 @@ class _RegisterState extends State<Register> {
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
                 child: TextField(
-                  controller: _registerC.lastnamec, //null,
+                  controller: _registerC.lastNameController, //null,
                   decoration: InputDecoration(
                     labelText: 'LastName',
                     labelStyle: TextStyle(
@@ -261,114 +261,116 @@ class _RegisterState extends State<Register> {
               //BirthDay
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // เลือกวัน
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: Size.width * 0.02,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Color(0xFF19D784), width: 2),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: DropdownButton(
-                        value: _registerC.selectedDay,
-                        hint: Padding(
-                          padding: EdgeInsets.only(right: 8.0),
-                          child: Text("DD"),
+                child: Obx(
+                  () => Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // เลือกวัน
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: Size.width * 0.02,
                         ),
-                        underline: SizedBox(),
-                        icon: Image.asset('images/icons/Arrow.png'),
-                        items:
-                            _registerC.days.map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _registerC.selectedDay = newValue;
-                            _registerC.birthdayc.text =
-                                '${_registerC.selectedDay ?? ''}-${_registerC.selectedMonth ?? ''}-${_registerC.selectedYear ?? ''}';
-                          });
-                        },
-                      ),
-                    ),
-                    SizedBox(width: 5),
-                    // เลือกเดือน
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: Size.width * 0.04,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Color(0xFF19D784), width: 2),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: DropdownButton(
-                        value: _registerC.selectedMonth,
-                        hint: Text("Month"),
-                        alignment: AlignmentDirectional.center,
-                        underline: SizedBox(),
-                        icon: Image.asset('images/icons/Arrow.png'),
-                        items:
-                            _registerC.months.asMap().entries.map((entry) {
-                              int index = entry.key; // ดัชนีของเดือน
-                              String monthName = entry.value; // ชื่อเดือน
-                              String monthNumber = (index + 1)
-                                  .toString()
-                                  .padLeft(2, '0'); // แปลงเป็นเลข
-                              return DropdownMenuItem<String>(
-                                value: monthNumber, // เก็บค่าเป็นตัวเลข
-                                child: Text(monthName), // แสดงชื่อเดือน
-                              );
-                            }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _registerC.selectedMonth = newValue;
-                            _registerC.birthdayc.text =
-                                '${_registerC.selectedDay ?? ''}-${_registerC.selectedMonth ?? ''}-${_registerC.selectedYear ?? ''}';
-                          });
-                        },
-                      ),
-                    ),
-                    SizedBox(width: 5),
-                    // เลือกปี
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: Size.width * 0.03,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Color(0xFF19D784), width: 2),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: DropdownButton(
-                        value: _registerC.selectedYear,
-                        hint: Padding(
-                          padding: EdgeInsets.only(right: 8.0),
-                          child: Text("YYYY"),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Color(0xFF19D784),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
-                        underline: SizedBox(),
-                        icon: Image.asset('images/icons/Arrow.png'),
-                        items:
-                            _registerC.years.map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _registerC.selectedYear = newValue;
-                            _registerC.birthdayc.text =
-                                '${_registerC.selectedDay ?? ''}-${_registerC.selectedMonth ?? ''}-${_registerC.selectedYear ?? ''}';
-                          });
-                        },
+                        child: DropdownButton<String>(
+                          value: _registerC.selectedDay.value,
+                          hint: Padding(
+                            padding: EdgeInsets.only(right: 8.0),
+                            child: Text("DD"),
+                          ),
+                          underline: SizedBox(),
+                          icon: Image.asset('images/icons/Arrow.png'),
+                          items:
+                              _registerC.days.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                          onChanged: (String? newValue) {
+                            _registerC.selectedDay.value = newValue;
+                            _registerC.birthdayController.text =
+                                '${_registerC.selectedYear.value ?? ''}-${_registerC.selectedMonth.value ?? ''}-${_registerC.selectedDay.value ?? ''}';
+                          },
+                        ),
                       ),
-                    ),
-                  ],
+                      SizedBox(width: 5),
+                      // เลือกเดือน
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: Size.width * 0.04,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Color(0xFF19D784),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: DropdownButton<String>(
+                          value: _registerC.selectedMonth.value,
+                          hint: Padding(
+                            padding: EdgeInsets.only(right: 8.0),
+                            child: Text("Month"),
+                          ),
+                          underline: SizedBox(),
+                          icon: Image.asset('images/icons/Arrow.png'),
+                          items:
+                              _registerC.months.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                          onChanged: (String? newValue) {
+                            _registerC.selectedMonth.value = newValue;
+                            _registerC.birthdayController.text =
+                                '${_registerC.selectedYear.value ?? ''}-${_registerC.selectedMonth.value ?? ''}-${_registerC.selectedDay.value ?? ''}';
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 5),
+                      // เลือกปี
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: Size.width * 0.03,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Color(0xFF19D784),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: DropdownButton<String>(
+                          value: _registerC.selectedYear.value,
+                          hint: Padding(
+                            padding: EdgeInsets.only(right: 8.0),
+                            child: Text("Year"),
+                          ),
+                          underline: SizedBox(),
+                          icon: Image.asset('images/icons/Arrow.png'),
+                          items:
+                              _registerC.years.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                          onChanged: (String? newValue) {
+                            _registerC.selectedYear.value = newValue;
+                            _registerC.birthdayController.text =
+                                '${_registerC.selectedYear.value ?? ''}-${_registerC.selectedMonth.value ?? ''}-${_registerC.selectedDay.value ?? ''}';
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 30),
@@ -378,7 +380,7 @@ class _RegisterState extends State<Register> {
                 () => Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   child: TextField(
-                    controller: _registerC.passwordc,
+                    controller: _registerC.passwordController,
                     obscureText: _registerC.isPasswordHidden.value,
                     decoration: InputDecoration(
                       labelText: 'Password',
@@ -426,7 +428,7 @@ class _RegisterState extends State<Register> {
                 () => Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   child: TextField(
-                    controller: _registerC.confirmPasswordc,
+                    controller: _registerC.confirmPasswordController,
                     obscureText: _registerC.isConfirmPasswordHidden.value,
                     onChanged: (value) => _registerC.validatePasswordMatch(),
 
@@ -517,7 +519,7 @@ class _RegisterState extends State<Register> {
                       style: TextStyle(color: Colors.black87, fontSize: 14),
                     ),
                     InkWell(
-                      onTap: _registerC.towelcome,
+                      onTap: _registerC.navigateToWelcome,
                       child: Text(
                         "ເຂົ້າສູ່ລະບົບ",
                         style: TextStyle(
