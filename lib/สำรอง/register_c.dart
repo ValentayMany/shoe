@@ -261,28 +261,7 @@ class RegisterC extends GetxController {
     }
   }
 
-  void clearForm() {
-    phoneController.clear();
-    emailController.clear();
-    firstNameController.clear();
-    lastNameController.clear();
-    genderController.text = "Male";
-    birthdayController.clear();
-    passwordController.clear();
-    confirmPasswordController.clear();
-
-    selectedDay.value = null;
-    selectedMonth.value = null;
-    selectedYear.value = null;
-
-    phoneError.value = '';
-    emailError.value = '';
-    confirmPasswordError.value = '';
-    isFormValid.value = false;
-  }
-
   void navigateToWelcome() {
-    clearForm();
     Get.to(
       () => Welcome(),
       transition: Transition.leftToRight,

@@ -3,7 +3,9 @@ import 'package:app_shoe/Services/apiservice.dart';
 import 'package:app_shoe/view/Home/layout.dart';
 import 'package:app_shoe/view/Login/register.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginC extends GetxController {
   // Controllers
@@ -32,6 +34,7 @@ class LoginC extends GetxController {
     if (!_validateInputs()) return;
 
     isLoading.value = true;
+    EasyLoading.show(status: 'Loading...');
 
     try {
       final response = await _apiService.post(
@@ -43,14 +46,21 @@ class LoginC extends GetxController {
       );
 
       isLoading.value = false;
+      EasyLoading.dismiss();
 
       if (response.success) {
+        final token = response.data['token'];
+        print('Token: $token');
+        // Save token
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', token);
         _navigateToHome();
       } else {
         _showErrorMessage(response.message ?? 'Login failed');
       }
     } catch (e) {
       isLoading.value = false;
+      EasyLoading.dismiss();
       _showErrorMessage('Connection error. Please try again.');
       print('Login error: $e');
     }

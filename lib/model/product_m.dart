@@ -16,4 +16,14 @@ class PItem {
     this.favorite = false,
     this.quantity = 1,
   });
+  factory PItem.fromJson(Map<String, dynamic> json) {
+    return PItem(
+      id: json['id'],
+      image: json['image'],
+      name: json['name'],
+      description: json['description'],
+      price: json['price'],
+      favorite: json['favorite'] ?? false,
+    );
+  }
 }

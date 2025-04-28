@@ -1,8 +1,27 @@
+import 'package:app_shoe/services/apiconstants.dart';
+import 'package:app_shoe/services/apiservice.dart';
+
 import '../model/product_m.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 class ShopC extends GetxController {
+  // final ApiService _apiService = ApiService();
+  // Future<void> fetchProducts() async {
+  //   try {
+  //     final response = await _apiService.get(ApiConstants.product);
+  //     if (response != null && response is List) {
+  //       _items.clear();
+  //       _items.addAll(response.map((json) => PItem.fromJson(json)).toList());
+
+  //       isLikedList.value = _items.map((item) => item.favorite).toList();
+  //       update();
+  //     }
+  //   } catch (e) {
+  //     print('Error fetching products: $e');
+  //   }
+  // }
+
   final List<PItem> _items = [
     PItem(
       id: 1,
