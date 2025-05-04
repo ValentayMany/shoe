@@ -24,32 +24,38 @@ class ShopC extends GetxController {
         isLikedList.value = _items.map((item) => item.favorite).toList();
         update();
       } else {
-        _showErrorMessage('Failed to fetch products: ${response.message}');
+        print('Failed to fetch products: ${response.message}');
       }
     } catch (e) {
-      _showErrorMessage('Error fetching products: $e');
+      print('Error fetching products: $e');
     }
   }
 
-  void _showErrorMessage(String message) {
-    Get.snackbar(
-      'Error',
-      message,
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.red.withOpacity(0.8),
-      colorText: Colors.white,
-    );
-  }
-
-  final RxList<PItem> _items = <PItem>[].obs;
-  List<PItem> get items => _items;
+  // final List<PItem> _items = [
+  //   PItem(
+  //     id: 1,
+  //     image: 'images/TUV.png',
+  //     name: "Men's Shoes: Nike IN",
+  //     description: "Men's Shoes: Nike IN",
+  //     price: 150000,
+  //     favorite: false,
+  //   ),
+  //   PItem(
+  //     id: 2,
+  //     image: 'images/TUV.png',
+  //     name: "Men's Shoes: Nike IN",
+  //     description: "Men's Shoes: Nike IN",
+  //     price: 150000,
+  //     favorite: true,
+  //   ),
+  // ];
+  // List<PItem> get items => _items;
   //-----------------------
   RxList<bool> isLikedList = <bool>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    fetchProducts();
     isLikedList.value = _items.map((item) => item.favorite).toList();
   }
 
@@ -70,22 +76,15 @@ class ShopC extends GetxController {
   }
 
   void addToCart(int index) {
-    final productId = _items[index].id;
     Get.snackbar(
       'Added to Cart',
-      '${productId} (Index: $productId)  has been added to your cart.',
+      '${_items[index].name} (Index: $index)  has been added to your cart.',
       snackPosition: SnackPosition.BOTTOM,
       duration: Duration(seconds: 2),
     );
   }
 
   void openProductDetails(int index) {
-    final productId = _items[index].id;
-    Get.snackbar(
-      'Product Details',
-      'Product ID: $productId',
-      snackPosition: SnackPosition.BOTTOM,
-      duration: Duration(seconds: 2),
-    );
+    print('Item clicked: ${index}');
   }
 }

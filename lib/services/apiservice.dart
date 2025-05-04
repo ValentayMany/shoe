@@ -16,6 +16,8 @@ class ApiService {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
+    // print('Retrieved token: $token'); // Debugging log
+
     final headers = {'Content-Type': 'application/json'};
 
     if (token != null && token.isNotEmpty) {

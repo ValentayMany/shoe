@@ -11,7 +11,6 @@ class Shop extends StatefulWidget {
 
 class _ShopState extends State<Shop> {
   final shop_c = Get.put(ShopC());
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -21,106 +20,69 @@ class _ShopState extends State<Shop> {
           children: [
             SizedBox(height: 16),
             //type product
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 16),
-                child: Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  alignment: WrapAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      child: Text('ALL', style: TextStyle(color: Colors.white)),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              alignment: WrapAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          side: BorderSide(color: Colors.grey),
-                        ),
-                      ),
-                      child: Text(
-                        'ເກີບກິລາ',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          side: BorderSide(color: Colors.grey),
-                        ),
-                      ),
-                      child: Text(
-                        'ເກີບເຮັດວຽກ',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          side: BorderSide(color: Colors.grey),
-                        ),
-                      ),
-                      child: Text(
-                        'ເກີບແຟຊັ່ນ',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          side: BorderSide(color: Colors.grey),
-                        ),
-                      ),
-                      child: Text(
-                        'ເກີບໃສ່ເຮືອນ',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          side: BorderSide(color: Colors.grey),
-                        ),
-                      ),
-                      child: Text(
-                        'ເກີບບູດ',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                  ],
+                  ),
+                  child: Text('ทั้งหมด', style: TextStyle(color: Colors.white)),
                 ),
-              ),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      side: BorderSide(color: Colors.grey),
+                    ),
+                  ),
+                  child: Text(
+                    'เป็นเกมส์',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      side: BorderSide(color: Colors.grey),
+                    ),
+                  ),
+                  child: Text(
+                    'เป็นเดสาน',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      side: BorderSide(color: Colors.grey),
+                    ),
+                  ),
+                  child: Text(
+                    'เป็นเดสาน',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 16),
             //item product
-            Obx(() {
-              if (shop_c.items.isEmpty) {
-                return Center(child: Text('No products available'));
-              }
-              return GridView.builder(
+            Container(
+              child: GridView.builder(
                 shrinkWrap: true,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -224,8 +186,8 @@ class _ShopState extends State<Shop> {
                     ),
                   );
                 },
-              );
-            }),
+              ),
+            ),
           ],
         ),
       ),

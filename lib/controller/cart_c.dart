@@ -10,6 +10,7 @@ class CartC extends GetxController {
           name: "Men's Shoes: Nike IN",
           description: "Men's Shoes: Nike IN",
           price: 150000,
+          Type: 1,
           favorite: false,
         ),
       ].obs; // Changed to RxList

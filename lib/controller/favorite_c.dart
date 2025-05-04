@@ -11,6 +11,7 @@ class FavoriteC extends GetxController {
           name: "Men's Shoes: Nike IN",
           description: "Men's Shoes: Nike IN",
           price: 150000,
+          Type: 1,
           favorite: true,
         ),
         PItem(
@@ -19,6 +20,7 @@ class FavoriteC extends GetxController {
           name: "Men's Shoes: Nike IN",
           description: "Men's Shoes: Nike IN",
           price: 150000,
+          Type: 1,
           favorite: false,
         ),
       ].obs;

@@ -47,17 +47,17 @@ class LoginC extends GetxController {
 
   Future<void> login() async {
     if (!_validateInputs()) return;
-    final identifier =
-        emailPhoneController.text.trim().isNotEmpty
-            ? emailPhoneController.text.trim()
-            : savedIdentifier.value;
+
     isLoading.value = true;
     EasyLoading.show(status: 'Loading...');
 
     try {
       final response = await _apiService.post(
         ApiConstants.loginEndpoint,
-        data: {'identifier': identifier, 'Password': passwordController.text},
+        data: {
+          'identifier': emailPhoneController.text.trim(),
+          'Password': passwordController.text,
+        },
       );
 
       isLoading.value = false;
@@ -69,8 +69,6 @@ class LoginC extends GetxController {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', token);
         await prefs.setString('identifier', emailPhoneController.text.trim());
-        // บันทึกสถานะการเข้าสู่ระบบ
-        await prefs.setBool('isLoggedIn', true);
         // print('Token received: $token');
 
         // ตรวจสอบอีกครั้งว่าบันทึกสำเร็จ
@@ -89,12 +87,7 @@ class LoginC extends GetxController {
   }
 
   bool _validateInputs() {
-    final identifier =
-        emailPhoneController.text.trim().isNotEmpty
-            ? emailPhoneController.text.trim()
-            : savedIdentifier.value;
-
-    if (identifier.isEmpty) {
+    if (emailPhoneController.text.isEmpty) {
       _showErrorMessage('Please enter your email or phone');
       return false;
     }
