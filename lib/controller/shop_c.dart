@@ -69,13 +69,33 @@ class ShopC extends GetxController {
     );
   }
 
+  //in cart
+  // final productId = _items[index].id;
+  // Get.snackbar(
+  //   'Added to Cart',
+  //   '${productId} (Index: $productId)  has been added to your cart.',
+  //   snackPosition: SnackPosition.BOTTOM,
+  //   duration: Duration(seconds: 2),
+  // );
   void addToCart(int index) {
-    final productId = _items[index].id;
-    Get.snackbar(
-      'Added to Cart',
-      '${productId} (Index: $productId)  has been added to your cart.',
-      snackPosition: SnackPosition.BOTTOM,
-      duration: Duration(seconds: 2),
+    showModalBottomSheet(
+      context: Get.context!,
+      builder:
+          (c) => Container(
+            width: MediaQuery.of(c).size.width * 0.9,
+            child: Column(
+              children: [
+                Text('Product ID: ${_items[index].id}'),
+                SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(c);
+                  },
+                  child: Text('Add to Cart'),
+                ),
+              ],
+            ),
+          ),
     );
   }
 
