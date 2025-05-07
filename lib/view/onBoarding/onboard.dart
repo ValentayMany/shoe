@@ -15,7 +15,6 @@ class _OnboardState extends State<Onboard> {
   Widget _buildOnboard(BuildContext context, int index) {
     var Size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: Stack(
           children: [
