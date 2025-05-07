@@ -1,5 +1,7 @@
+import 'package:app_shoe/controller/shop_c.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -9,6 +11,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final shop_c = Get.put(ShopC());
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -90,6 +94,7 @@ class _HomeState extends State<Home> {
                       // เพิ่มการทำงานเมื่อกดการ์ด
                       print('Card $index tapped');
                     },
+
                     child: Card(
                       color: color, // กำหนดสีพื้นหลัง
                       shape: RoundedRectangleBorder(
@@ -106,16 +111,6 @@ class _HomeState extends State<Home> {
                             child: Container(
                               height: extent.toDouble(),
                               child: Image.asset('images/shoe_bg.png'),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              'Shoe ${index + 1}',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
                             ),
                           ),
                         ],

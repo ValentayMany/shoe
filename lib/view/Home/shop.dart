@@ -14,24 +14,21 @@ class _ShopState extends State<Shop> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 16),
-            //type product
-            SingleChildScrollView(
+      child: Column(
+        children: [
+          //category buttons
+          Container(
+            height: 60,
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 16),
-                child: Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  alignment: WrapAlignment.center,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Row(
                   children: [
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => shop_c.fetchProducts(),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
                         shape: RoundedRectangleBorder(
@@ -40,8 +37,9 @@ class _ShopState extends State<Shop> {
                       ),
                       child: Text('ALL', style: TextStyle(color: Colors.white)),
                     ),
+                    SizedBox(width: 8),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => shop_c.fetchCategoryProducts('1'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
@@ -54,8 +52,9 @@ class _ShopState extends State<Shop> {
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
+                    SizedBox(width: 8),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => shop_c.fetchCategoryProducts('2'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
@@ -68,8 +67,9 @@ class _ShopState extends State<Shop> {
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
+                    SizedBox(width: 8),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => shop_c.fetchCategoryProducts('3'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
@@ -82,8 +82,9 @@ class _ShopState extends State<Shop> {
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
+                    SizedBox(width: 8),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => shop_c.fetchCategoryProducts('4'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
@@ -96,8 +97,9 @@ class _ShopState extends State<Shop> {
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
+                    SizedBox(width: 8),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => shop_c.fetchCategoryProducts('5'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
@@ -114,110 +116,182 @@ class _ShopState extends State<Shop> {
                 ),
               ),
             ),
-            SizedBox(height: 16),
-            //item product
-            Obx(() {
-              if (shop_c.items.isEmpty) {
-                return Center(child: Text('No products available'));
+          ),
+          //products grid
+          Expanded(
+            child: Obx(() {
+              if (shop_c.isLoading.value) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(color: Colors.green),
+                      SizedBox(height: 16),
+                      Text(
+                        'Loading products...',
+                        style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                      ),
+                    ],
+                  ),
+                );
               }
+
+              if (shop_c.error.value.isNotEmpty) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.error_outline, size: 64, color: Colors.red),
+                      SizedBox(height: 16),
+                      Text(
+                        'Error loading products',
+                        style: TextStyle(fontSize: 18, color: Colors.red),
+                      ),
+                      SizedBox(height: 8),
+                      ElevatedButton(
+                        onPressed: () => shop_c.fetchProducts(),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                        ),
+                        child: Text('Retry'),
+                      ),
+                    ],
+                  ),
+                );
+              }
+
+              if (shop_c.items.isEmpty) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.shopping_bag_outlined,
+                        size: 64,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(height: 16),
+                      Text(
+                        'No products available',
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                );
+              }
+
               return GridView.builder(
-                shrinkWrap: true,
+                padding: EdgeInsets.all(16),
+                physics: BouncingScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 16.0,
                   mainAxisSpacing: 16.0,
-                  childAspectRatio: 1,
+                  childAspectRatio: 0.7,
                 ),
-                padding: EdgeInsets.all(8.0),
                 itemCount: shop_c.items.length,
                 itemBuilder: (context, index) {
                   final item = shop_c.items[index];
-                  //show item product
                   return GestureDetector(
-                    onTap: () {
-                      shop_c.openProductDetails(index);
-                    },
+                    //error
+                    // onTap: () => shop_c.openProductDetails(index),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Color(0xFFE8F5E9),
                         borderRadius: BorderRadius.circular(12.0),
                         border: Border.all(color: Colors.green),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 8,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
                       ),
                       child: Stack(
                         children: [
-                          Positioned(
-                            top: 8,
-                            left: 8,
-                            child: Container(
-                              child: Obx(() {
-                                return shop_c.buildLikeButton(index);
-                              }),
-                            ),
-                          ),
-                          Center(
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Image.asset(
-                                    item.image,
-                                    fit: BoxFit.contain,
-                                    height: size.height * 0.1,
-                                    width: size.width * 0.3,
+                                Expanded(
+                                  flex: 5,
+                                  child: Center(
+                                    child: Image.network(
+                                      item.image,
+                                      fit: BoxFit.contain,
+                                    ),
                                   ),
                                 ),
-                                Text(
-                                  item.name,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  item.description,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                SizedBox(height: 8.0),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Text(
-                                        'ລາຄາ: ${item.price.toString()} K',
+                                Expanded(
+                                  flex: 4,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        item.name,
                                         style: TextStyle(
-                                          fontSize: 16,
+                                          fontSize: 14,
                                           fontWeight: FontWeight.bold,
                                         ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          shop_c.addToCart(index);
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.green,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                              20,
+                                      SizedBox(height: 4),
+                                      Text(
+                                        item.description,
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.grey[600],
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Spacer(),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            '${item.price} K',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.green,
                                             ),
                                           ),
-                                        ),
-                                        child: Text('Add'),
+                                          InkWell(
+                                            onTap:
+                                                () => shop_c.addToCart(index),
+                                            child: Container(
+                                              padding: EdgeInsets.all(6),
+                                              decoration: BoxDecoration(
+                                                color: Colors.green,
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                              ),
+                                              child: Icon(
+                                                Icons.add_shopping_cart,
+                                                color: Colors.white,
+                                                size: 18,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
+                          ),
+                          Positioned(
+                            top: 8,
+                            right: 8,
+                            child: Obx(() => shop_c.buildLikeButton(index)),
                           ),
                         ],
                       ),
@@ -226,8 +300,8 @@ class _ShopState extends State<Shop> {
                 },
               );
             }),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

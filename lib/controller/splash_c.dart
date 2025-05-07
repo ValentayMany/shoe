@@ -5,14 +5,26 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashC extends GetxController {
   final isLoggedIn = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    checkLoginStatus();
+  }
+
+  Future<void> checkLoginStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? savedIdentifier = prefs.getString('identifier');
+    isLoggedIn.value = savedIdentifier != null && savedIdentifier.isNotEmpty;
+  }
+
   Future<void> loadView() async {
     await Future.delayed(const Duration(seconds: 2));
-    final prefs = await SharedPreferences.getInstance();
-    isLoggedIn.value = prefs.getBool('isLoggedIn') ?? false;
-    if (isLoggedIn.value) {
-      Get.to(Login());
-    } else {
+    print('isLoggedIn: ${isLoggedIn.value}');
+    if (!isLoggedIn.value) {
       Get.off(Onboard());
+    } else {
+      Get.to(Login());
     }
   }
 }
