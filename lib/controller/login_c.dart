@@ -26,9 +26,10 @@ class LoginC extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    loadSavedIdentifier(); // โหลดค่าทันทีเมื่อ controller ถูกสร้าง
+    loadSavedIdentifier();
   }
 
+  //load saved identifier from shared preferences
   Future<void> loadSavedIdentifier() async {
     final prefs = await SharedPreferences.getInstance();
     savedIdentifier.value = prefs.getString('identifier') ?? '';
@@ -45,6 +46,7 @@ class LoginC extends GetxController {
     isPasswordHidden.value = !isPasswordHidden.value;
   }
 
+  // Login function
   Future<void> login() async {
     if (!_validateInputs()) return;
     final identifier =
@@ -62,20 +64,19 @@ class LoginC extends GetxController {
 
       isLoading.value = false;
       EasyLoading.dismiss();
-
       if (response.success) {
         final token = response.data['token'];
         // บันทึก token
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', token);
-        await prefs.setString('identifier', emailPhoneController.text.trim());
-        // บันทึกสถานะการเข้าสู่ระบบ
-        await prefs.setBool('isLoggedIn', true);
-        // print('Token received: $token');
+        // save identifier
+        await prefs.setString('identifier', identifier);
+        // save login status
+        await prefs.setString('isLoggedIn', 'true');
 
         // ตรวจสอบอีกครั้งว่าบันทึกสำเร็จ
-        // final storedToken = prefs.getString('token');
-        // print('Stored token after login: $storedToken');
+        final storedToken = prefs.getString('token');
+        print('Stored token after login: $storedToken');
         _navigateToHome();
       } else {
         _showErrorMessage(response.message ?? 'Login failed');

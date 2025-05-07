@@ -24,21 +24,24 @@ class _LayoutState extends State<Layout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: SizedBox.shrink(),
-        title: Center(child: Image.asset('images/TUV.png', width: 50)),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: IconButton(
-              icon: Icon(Icons.search, color: Colors.black),
-              onPressed: () {},
-            ),
-          ),
-        ],
-      ),
+      appBar:
+          _currentPage == 4
+              ? null
+              : AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                leading: SizedBox.shrink(),
+                title: Center(child: Image.asset('images/TUV.png', width: 50)),
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 16.0),
+                    child: IconButton(
+                      icon: Icon(Icons.search, color: Colors.black),
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
+              ),
       body: _pages[_currentPage],
       bottomNavigationBar: BottomNavigationBar(
         items: [

@@ -5,6 +5,6 @@ class ApiConstants {
   static const String loginEndpoint = '/api/auth/login';
   static const String registerEndpoint = '/api/auth/register';
   //category
-  static const String productsEndpoint = '/api/category/getAll';
+  static const String productsEndpoint = '/api/categories/';
   // Add other endpoints as needed
 }
