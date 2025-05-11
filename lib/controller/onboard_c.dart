@@ -5,18 +5,18 @@ import 'package:get/get.dart';
 class OnboardC extends GetxController {
   final List<Map<String, dynamic>> onboardData = [
     {
-      'image': 'images/onboard1.png',
+      'image': 'images/ob1.png',
       'title': 'View product 360 degrees',
       'description':
           'You can see the product with all angles, true and convenient',
     },
     {
-      'image': 'images/onboard2.png',
+      'image': 'images/ob2.png',
       'title': 'View product 360 degrees',
       'description': 'Connect with friends and family easily.',
     },
     {
-      'image': 'images/onboard3.png',
+      'image': 'images/ob3.png',
       'title': 'Get Started Now',
       'description': 'Join us and explore the world of possibilities.',
     },

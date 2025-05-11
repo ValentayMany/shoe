@@ -27,14 +27,17 @@ class _WelcomeState extends State<Welcome> {
                     Container(
                       width: 100,
                       height: 120,
-                      child: Image.asset('images/TUV.png', fit: BoxFit.contain),
+                      child: Image.asset(
+                        'images/LOGO.png',
+                        fit: BoxFit.contain,
+                      ),
                     ),
                     Container(
                       width: 2,
                       height: 150,
                       margin: EdgeInsets.symmetric(horizontal: 20),
                       decoration: BoxDecoration(
-                        color: Color(0xFF19D784),
+                        color: Color(0xFF1723AC),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0.2), // เงาอ่อน
@@ -54,7 +57,7 @@ class _WelcomeState extends State<Welcome> {
                           style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF19D784),
+                            color: Color(0xFF5B9EE1),
                           ),
                         ),
                         RichText(
@@ -73,7 +76,7 @@ class _WelcomeState extends State<Welcome> {
                                 style: TextStyle(
                                   fontSize: 32,
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xFF19D784),
+                                  color: Color(0xFF5B9EE1),
                                 ),
                               ),
                             ],
@@ -109,14 +112,14 @@ class _WelcomeState extends State<Welcome> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: Color(0xFF19D784),
+                          color: Color(0xFF0500D4),
                           width: 2,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: Color(0xFF19D784),
+                          color: Color(0xFF0500D4),
                           width: 2,
                         ),
                       ),
@@ -152,14 +155,14 @@ class _WelcomeState extends State<Welcome> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: BorderSide(
-                            color: Color(0xFF19D784),
+                            color: Color(0xFF0500D4),
                             width: 2,
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: BorderSide(
-                            color: Color(0xFF19D784),
+                            color: Color(0xFF0500D4),
                             width: 2,
                           ),
                         ),
@@ -171,7 +174,7 @@ class _WelcomeState extends State<Welcome> {
                               _loginC.isPasswordHidden.value
                                   ? Icons.visibility_off
                                   : Icons.visibility,
-                              color: Color(0xFF19D784),
+                              color: Color(0xFF0500D4),
                             ),
                             onPressed: _loginC.togglePasswordVisibility,
                           ),
@@ -199,7 +202,7 @@ class _WelcomeState extends State<Welcome> {
                         child: Text(
                           "Password",
                           style: TextStyle(
-                            color: Color(0xFF19D784),
+                            color: Color(0xFF0500D4),
                             fontSize: 14,
                             decoration: TextDecoration.underline,
                           ),
@@ -215,7 +218,7 @@ class _WelcomeState extends State<Welcome> {
                   height: 40,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Color(0xFF19D784), Color(0xFF16A886)],
+                      colors: [Color(0xFF1932D7), Color(0xFF2685D2)],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),
@@ -256,7 +259,7 @@ class _WelcomeState extends State<Welcome> {
                         child: Text(
                           "ລົງທະບຽນ",
                           style: TextStyle(
-                            color: Color(0xFF19D784),
+                            color: Color(0xFF1932D7),
                             fontSize: 14,
                             decoration: TextDecoration.underline,
                           ),

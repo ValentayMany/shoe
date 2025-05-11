@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'package:app_shoe/services/apiconstants.dart';
+import 'package:app_shoe/view/Login/login.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
 
 class ApiResponse {
   final bool success;
@@ -45,8 +48,28 @@ class ApiService {
 
       final responseBody = jsonDecode(response.body);
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         return ApiResponse(success: true, data: responseBody);
+      }
+      if (response.statusCode == 403) {
+        Get.dialog(
+          AlertDialog(
+            title: Text('Unauthorized Access'),
+            content: Text('Please log in again.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Get.offAll(Login());
+                },
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        );
+        return ApiResponse(
+          success: false,
+          message: 'Unauthorized access. Please log in again.',
+        );
       } else {
         return ApiResponse(
           success: false,

@@ -13,135 +13,189 @@ class Favorite extends StatefulWidget {
 class _FavoriteState extends State<Favorite> {
   final favorite_c = Get.put(FavoriteC());
   final shop_c = Get.put(ShopC());
+
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 20),
-            Text(
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(20),
+            child: Text(
               'Favorite Items',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16),
-            Obx(
-              () => GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16.0,
-                  mainAxisSpacing: 16.0,
-                  childAspectRatio: 1,
-                ),
-                padding: EdgeInsets.all(8.0),
-                itemCount: favorite_c.favoriteItems.length,
-                itemBuilder: (context, index) {
-                  final item = favorite_c.favoriteItems[index];
-                  return GestureDetector(
-                    onTap: () {
-                      shop_c.openProductDetails(index);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFE8F5E9),
-                        borderRadius: BorderRadius.circular(12.0),
-                        border: Border.all(color: Colors.green),
-                      ),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            top: 8,
-                            left: 8,
-                            child: Container(
-                              child: IconButton(
-                                icon: Icon(
-                                  item.favorite
-                                      ? Icons.favorite
-                                      : Icons.favorite_border,
-                                  color: Colors.red,
-                                ),
-                                onPressed: () {
-                                  favorite_c.toggleFavorite(
-                                    favorite_c.items.indexOf(item),
-                                  );
-                                },
-                              ),
-                            ),
+          ),
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: () => favorite_c.fetchFavorites(),
+              child: Obx(() {
+                if (favorite_c.isLoading.value) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(color: Colors.green),
+                        SizedBox(height: 16),
+                        Text(
+                          'Loading favorites...',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey[600],
                           ),
-                          Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                if (favorite_c.error.value.isNotEmpty) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.error_outline, size: 64, color: Colors.red),
+                        SizedBox(height: 16),
+                        Text(
+                          favorite_c.error.value,
+                          style: TextStyle(fontSize: 18, color: Colors.red),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                if (favorite_c.favoriteItems.isEmpty) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.favorite_border,
+                          size: 64,
+                          color: Colors.grey,
+                        ),
+                        SizedBox(height: 16),
+                        Text(
+                          'No favorite items yet',
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
+                return GridView.builder(
+                  padding: EdgeInsets.all(16),
+                  physics: BouncingScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 16.0,
+                    mainAxisSpacing: 16.0,
+                    childAspectRatio:
+                        MediaQuery.of(context).size.width /
+                        (MediaQuery.of(context).size.height / 1.8),
+                  ),
+                  itemCount: favorite_c.favoriteItems.length,
+                  itemBuilder: (context, index) {
+                    final item = favorite_c.favoriteItems[index];
+                    return GestureDetector(
+                      onTap: () => shop_c.openProductDetails(index),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.1),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Stack(
                               children: [
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Image.asset(
-                                    item.image,
-                                    fit: BoxFit.contain,
-                                    height: size.height * 0.1,
-                                    width: size.width * 0.3,
-                                  ),
-                                ),
-                                Text(
-                                  item.name,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  item.description,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                SizedBox(height: 8.0),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Text(
-                                        item.price.toString(),
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
+                                Container(
+                                  height: 120,
+                                  width: double.infinity,
+                                  child: Center(
+                                    child: Image.network(
+                                      item.image ?? '',
+                                      fit: BoxFit.contain,
+                                      errorBuilder: (
+                                        context,
+                                        error,
+                                        stackTrace,
+                                      ) {
+                                        return Icon(
+                                          Icons.image_not_supported,
+                                          size: 50,
+                                          color: Colors.grey,
+                                        );
+                                      },
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: ElevatedButton(
-                                        onPressed: () {},
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.green,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                              20,
-                                            ),
-                                          ),
-                                        ),
-                                        child: Text('Add'),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 0,
+                                  left: 8,
+                                  child: Obx(
+                                    () => IconButton(
+                                      icon: Icon(
+                                        favorite_c.isFavorite(item.id)
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                        color:
+                                            favorite_c.isFavorite(item.id)
+                                                ? Colors.red
+                                                : Colors.grey,
                                       ),
+                                      onPressed:
+                                          () => favorite_c.toggleFavorite(item),
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    item.name ?? 'Unnamed Product',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    'ລາຄາ: ${item.price} K',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
+                    );
+                  },
+                );
+              }),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
