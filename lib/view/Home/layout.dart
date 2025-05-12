@@ -1,9 +1,12 @@
+import 'package:app_shoe/controller/favorite_c.dart';
+import 'package:app_shoe/controller/shop_c.dart';
 import 'package:app_shoe/view/Home/account.dart';
 import 'package:app_shoe/view/Home/cart.dart';
 import 'package:app_shoe/view/Home/favorite.dart';
 import 'package:app_shoe/view/Home/home.dart';
 import 'package:app_shoe/view/Home/shop.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Layout extends StatefulWidget {
   const Layout({super.key});
@@ -13,6 +16,8 @@ class Layout extends StatefulWidget {
 }
 
 class _LayoutState extends State<Layout> {
+  final shop_c = Get.put(ShopC());
+  final fav_c = Get.put(FavoriteC());
   int _currentPage = 0;
   final List<Widget> _pages = [
     Home(),
@@ -73,6 +78,12 @@ class _LayoutState extends State<Layout> {
           setState(() {
             _currentPage = index;
           });
+          if (_currentPage == 1) {
+            shop_c.refreshShopData();
+          }
+          if (_currentPage == 3) {
+            fav_c.initUserId();
+          }
         },
       ),
     );

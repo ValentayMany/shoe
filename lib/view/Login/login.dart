@@ -26,7 +26,7 @@ class _LoginState extends State<Login> {
                     margin: EdgeInsets.only(top: 10, left: 10),
                     width: 60,
                     height: 70,
-                    child: Image.asset('images/TUV.png', fit: BoxFit.contain),
+                    child: Image.asset('images/LOGO.png', fit: BoxFit.contain),
                   ),
                 ],
               ),
@@ -115,14 +115,14 @@ class _LoginState extends State<Login> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: Color(0xFF19D784),
+                          color: Color(0xFF1723AC),
                           width: 2,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: Color(0xFF19D784),
+                          color: Color(0xFF1723AC),
                           width: 2,
                         ),
                       ),
@@ -134,7 +134,7 @@ class _LoginState extends State<Login> {
                             _loginC.isPasswordHidden.value
                                 ? Icons.visibility_off
                                 : Icons.visibility,
-                            color: Color(0xFF19D784),
+                            color: Color(0xFF1723AC),
                           ),
                           onPressed: _loginC.togglePasswordVisibility,
                         ),
@@ -162,7 +162,7 @@ class _LoginState extends State<Login> {
                       child: Text(
                         "Password",
                         style: TextStyle(
-                          color: Color(0xFF19D784),
+                          color: Color(0xFF1723AC),
                           fontSize: 14,
                           decoration: TextDecoration.underline,
                         ),
@@ -178,7 +178,7 @@ class _LoginState extends State<Login> {
                 height: 40,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF19D784), Color(0xFF16A886)],
+                    colors: [Color(0xFF1723AC), Color(0xFF1723AC)],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                   ),
@@ -215,7 +215,7 @@ class _LoginState extends State<Login> {
                       child: Text(
                         "ປ່ຽນໝາຍເລກໃຫມ່",
                         style: TextStyle(
-                          color: Color(0xFF19D784),
+                          color: Color(0xFF1723AC),
                           fontSize: 18,
                           decoration: TextDecoration.underline,
                         ),

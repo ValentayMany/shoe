@@ -1,4 +1,5 @@
 import 'package:app_shoe/controller/shop_c.dart';
+import 'package:app_shoe/controller/favorite_c.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +12,7 @@ class Shop extends StatefulWidget {
 
 class _ShopState extends State<Shop> {
   final shop_c = Get.put(ShopC());
+  final favorite_c = Get.put(FavoriteC());
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +30,10 @@ class _ShopState extends State<Shop> {
                 child: Row(
                   children: [
                     ElevatedButton(
-                      onPressed: () => shop_c.fetchProducts(),
+                      onPressed: () => shop_c.fetchProducts(''),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
+                        padding: EdgeInsets.symmetric(horizontal: 24),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -39,76 +42,81 @@ class _ShopState extends State<Shop> {
                     ),
                     SizedBox(width: 8),
                     ElevatedButton(
-                      onPressed: () => shop_c.fetchCategoryProducts('1'),
+                      onPressed: () => shop_c.fetchProducts('1'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
+                        padding: EdgeInsets.symmetric(horizontal: 24),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
-                          side: BorderSide(color: Colors.grey),
+                          side: BorderSide(color: Colors.grey.shade300),
                         ),
                       ),
                       child: Text(
-                        'ເກີບກິລາ',
+                        'Nike',
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
                     SizedBox(width: 8),
                     ElevatedButton(
-                      onPressed: () => shop_c.fetchCategoryProducts('2'),
+                      onPressed: () => shop_c.fetchProducts('2'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
+                        padding: EdgeInsets.symmetric(horizontal: 24),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
-                          side: BorderSide(color: Colors.grey),
+                          side: BorderSide(color: Colors.grey.shade300),
                         ),
                       ),
                       child: Text(
-                        'ເກີບເຮັດວຽກ',
+                        'Adidas',
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
                     SizedBox(width: 8),
                     ElevatedButton(
-                      onPressed: () => shop_c.fetchCategoryProducts('3'),
+                      onPressed: () => shop_c.fetchProducts('3'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
+                        padding: EdgeInsets.symmetric(horizontal: 24),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
-                          side: BorderSide(color: Colors.grey),
+                          side: BorderSide(color: Colors.grey.shade300),
                         ),
                       ),
                       child: Text(
-                        'ເກີບແຟຊັ່ນ',
+                        'Puma',
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
                     SizedBox(width: 8),
                     ElevatedButton(
-                      onPressed: () => shop_c.fetchCategoryProducts('4'),
+                      onPressed: () => shop_c.fetchProducts('4'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
+                        padding: EdgeInsets.symmetric(horizontal: 24),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
-                          side: BorderSide(color: Colors.grey),
+                          side: BorderSide(color: Colors.grey.shade300),
                         ),
                       ),
                       child: Text(
-                        'ເກີບໃສ່ເຮືອນ',
+                        'New Balance',
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
                     SizedBox(width: 8),
                     ElevatedButton(
-                      onPressed: () => shop_c.fetchCategoryProducts('5'),
+                      onPressed: () => shop_c.fetchProducts('5'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
+                        padding: EdgeInsets.symmetric(horizontal: 24),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
-                          side: BorderSide(color: Colors.grey),
+                          side: BorderSide(color: Colors.grey.shade300),
                         ),
                       ),
                       child: Text(
-                        'ເກີບບູດ',
+                        'Converse',
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
@@ -144,15 +152,12 @@ class _ShopState extends State<Shop> {
                       Icon(Icons.error_outline, size: 64, color: Colors.red),
                       SizedBox(height: 16),
                       Text(
-                        'Error loading products',
+                        shop_c.error.value,
                         style: TextStyle(fontSize: 18, color: Colors.red),
                       ),
                       SizedBox(height: 8),
                       ElevatedButton(
-                        onPressed: () => shop_c.fetchProducts(),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
-                        ),
+                        onPressed: () => shop_c.refreshShopData(),
                         child: Text('Retry'),
                       ),
                     ],
@@ -166,13 +171,13 @@ class _ShopState extends State<Shop> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.shopping_bag_outlined,
+                        Icons.shopping_basket_outlined,
                         size: 64,
                         color: Colors.grey,
                       ),
                       SizedBox(height: 16),
                       Text(
-                        'No products available',
+                        'No products found',
                         style: TextStyle(fontSize: 18, color: Colors.grey),
                       ),
                     ],
@@ -187,111 +192,95 @@ class _ShopState extends State<Shop> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 16.0,
                   mainAxisSpacing: 16.0,
-                  childAspectRatio: 0.7,
+                  childAspectRatio:
+                      MediaQuery.of(context).size.width /
+                      (MediaQuery.of(context).size.height / 1.8),
                 ),
                 itemCount: shop_c.items.length,
                 itemBuilder: (context, index) {
                   final item = shop_c.items[index];
                   return GestureDetector(
-                    //error
-                    // onTap: () => shop_c.openProductDetails(index),
+                    onTap: () => shop_c.openProductDetails(index),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Color(0xFFE8F5E9),
-                        borderRadius: BorderRadius.circular(12.0),
-                        border: Border.all(color: Colors.green),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 8,
-                            offset: Offset(0, 4),
+                            color: Colors.grey.withOpacity(0.1),
+                            spreadRadius: 1,
+                            blurRadius: 5,
                           ),
                         ],
                       ),
-                      child: Stack(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Stack(
+                            children: [
+                              Container(
+                                height: 120,
+                                width: double.infinity,
+                                child: Center(
+                                  child: Image.network(
+                                    item.image ?? '',
+                                    fit: BoxFit.contain,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Icon(
+                                        Icons.image_not_supported,
+                                        size: 50,
+                                        color: Colors.grey,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: 0,
+                                left: 8,
+                                child: Obx(
+                                  () => IconButton(
+                                    icon: Icon(
+                                      favorite_c.isFavorite(item.id)
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      color:
+                                          favorite_c.isFavorite(item.id)
+                                              ? Colors.red
+                                              : Colors.grey,
+                                    ),
+                                    onPressed:
+                                        () => favorite_c.toggleFavorite(item),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                           Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Expanded(
-                                  flex: 5,
-                                  child: Center(
-                                    child: Image.network(
-                                      item.image,
-                                      fit: BoxFit.contain,
-                                    ),
+                                Text(
+                                  item.name ?? 'Unnamed Product',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
                                   ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                Expanded(
-                                  flex: 4,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        item.name,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      SizedBox(height: 4),
-                                      Text(
-                                        item.description,
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.grey[600],
-                                        ),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      Spacer(),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            '${item.price} K',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.green,
-                                            ),
-                                          ),
-                                          InkWell(
-                                            onTap:
-                                                () => shop_c.addToCart(index),
-                                            child: Container(
-                                              padding: EdgeInsets.all(6),
-                                              decoration: BoxDecoration(
-                                                color: Colors.green,
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                              child: Icon(
-                                                Icons.add_shopping_cart,
-                                                color: Colors.white,
-                                                size: 18,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                SizedBox(height: 4),
+                                Text(
+                                  'ລາຄາ: ${item.price} K',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                          Positioned(
-                            top: 8,
-                            right: 8,
-                            child: Obx(() => shop_c.buildLikeButton(index)),
                           ),
                         ],
                       ),

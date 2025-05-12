@@ -69,6 +69,9 @@ class LoginC extends GetxController {
         // บันทึก token
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', token);
+        //save user id
+        final userId = response.data['userId'].toString();
+        await prefs.setString('userId', userId);
         // save identifier
         await prefs.setString('identifier', identifier);
         // save login status
@@ -77,6 +80,7 @@ class LoginC extends GetxController {
         // ตรวจสอบอีกครั้งว่าบันทึกสำเร็จ
         final storedToken = prefs.getString('token');
         print('Stored token after login: $storedToken');
+        print('User ID after login: $userId');
         _navigateToHome();
       } else {
         _showErrorMessage(response.message ?? 'Login failed');

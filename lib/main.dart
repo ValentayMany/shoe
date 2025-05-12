@@ -15,8 +15,8 @@ void configLoading() {
     ..indicatorSize = 45.0
     ..radius = 5.0
     ..progressColor = Colors.white
-    ..backgroundColor = Colors.green
-    ..indicatorColor = Colors.greenAccent
+    ..backgroundColor = Colors.blue
+    ..indicatorColor = Colors.white
     ..textColor = Colors.white
     ..userInteractions = false
     ..dismissOnTap = false;

@@ -42,7 +42,7 @@ class _RegisterState extends State<Register> {
                   gradient:
                       isSelected
                           ? LinearGradient(
-                            colors: [Color(0xFF19D784), Color(0xFF16A886)],
+                            colors: [Color(0xFF1723AC), Color(0xFF1723AC)],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                           )
@@ -73,7 +73,7 @@ class _RegisterState extends State<Register> {
                     margin: EdgeInsets.only(top: 10, left: 10),
                     width: 60,
                     height: 70,
-                    child: Image.asset('images/TUV.png', fit: BoxFit.contain),
+                    child: Image.asset('images/LOGO.png', fit: BoxFit.contain),
                   ),
                 ],
               ),
@@ -82,7 +82,7 @@ class _RegisterState extends State<Register> {
                 child: Text(
                   'Register',
                   style: TextStyle(
-                    color: Color(0xFF19D784),
+                    color: Color(0xFF1932D7),
                     fontSize: Size.width * 0.09,
                     fontWeight: FontWeight.bold,
                   ),
@@ -111,14 +111,14 @@ class _RegisterState extends State<Register> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: Color(0xFF19D784),
+                          color: Color(0xFF1723AC),
                           width: 2,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: Color(0xFF19D784),
+                          color: Color(0xFF1723AC),
                           width: 2,
                         ),
                       ),
@@ -154,14 +154,14 @@ class _RegisterState extends State<Register> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: Color(0xFF19D784),
+                          color: Color(0xFF1723AC),
                           width: 2,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: Color(0xFF19D784),
+                          color: Color(0xFF1723AC),
                           width: 2,
                         ),
                       ),
@@ -191,14 +191,14 @@ class _RegisterState extends State<Register> {
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide(
-                        color: Color(0xFF19D784),
+                        color: Color(0xFF1723AC),
                         width: 2,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide(
-                        color: Color(0xFF19D784),
+                        color: Color(0xFF1723AC),
                         width: 2,
                       ),
                     ),
@@ -223,14 +223,14 @@ class _RegisterState extends State<Register> {
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide(
-                        color: Color(0xFF19D784),
+                        color: Color(0xFF1723AC),
                         width: 2,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide(
-                        color: Color(0xFF19D784),
+                        color: Color(0xFF1723AC),
                         width: 2,
                       ),
                     ),
@@ -272,7 +272,7 @@ class _RegisterState extends State<Register> {
                         ),
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: Color(0xFF19D784),
+                            color: Color(0xFF1723AC),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8.0),
@@ -307,7 +307,7 @@ class _RegisterState extends State<Register> {
                         ),
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: Color(0xFF19D784),
+                            color: Color(0xFF1723AC),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8.0),
@@ -342,7 +342,7 @@ class _RegisterState extends State<Register> {
                         ),
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: Color(0xFF19D784),
+                            color: Color(0xFF1723AC),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(8.0),
@@ -393,14 +393,14 @@ class _RegisterState extends State<Register> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: Color(0xFF19D784),
+                          color: Color(0xFF1723AC),
                           width: 2,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: Color(0xFF19D784),
+                          color: Color(0xFF1723AC),
                           width: 2,
                         ),
                       ),
@@ -412,7 +412,7 @@ class _RegisterState extends State<Register> {
                             _registerC.isPasswordHidden.value
                                 ? Icons.visibility_off
                                 : Icons.visibility,
-                            color: Color(0xFF19D784),
+                            color: Color(0xFF1723AC),
                           ),
                           onPressed: _registerC.togglePasswordVisibility,
                         ),
@@ -443,14 +443,14 @@ class _RegisterState extends State<Register> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: Color(0xFF19D784),
+                          color: Color(0xFF1723AC),
                           width: 2,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: Color(0xFF19D784),
+                          color: Color(0xFF1723AC),
                           width: 2,
                         ),
                       ),
@@ -462,7 +462,7 @@ class _RegisterState extends State<Register> {
                             _registerC.isConfirmPasswordHidden.value
                                 ? Icons.visibility_off
                                 : Icons.visibility,
-                            color: Color(0xFF19D784),
+                            color: Color(0xFF1723AC),
                           ),
                           onPressed: _registerC.toggleConfirmPasswordVisibility,
                         ),
@@ -482,7 +482,7 @@ class _RegisterState extends State<Register> {
                 height: 40,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF19D784), Color(0xFF16A886)],
+                    colors: [Color(0xFF1723AC), Color(0xFF16A886)],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                   ),
@@ -523,7 +523,7 @@ class _RegisterState extends State<Register> {
                       child: Text(
                         "ເຂົ້າສູ່ລະບົບ",
                         style: TextStyle(
-                          color: Color(0xFF19D784),
+                          color: Color(0xFF1723AC),
                           fontSize: 14,
                           decoration: TextDecoration.underline,
                         ),

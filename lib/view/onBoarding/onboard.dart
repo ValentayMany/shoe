@@ -30,7 +30,7 @@ class _OnboardState extends State<Onboard> {
                       Onboard_C.onboardData[index]['title'],
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Color(0xFF19D784),
+                        color: Color(0xFF5B9EE1),
                         fontSize: Size.width * 0.07,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.italic,
@@ -64,7 +64,7 @@ class _OnboardState extends State<Onboard> {
                             decoration: BoxDecoration(
                               color:
                                   index == Onboard_C.currentboard.value
-                                      ? Color(0xFF19D784)
+                                      ? Color(0xFF5B9EE1)
                                       : Color(0xFFD9D9D9),
                               shape: BoxShape.circle,
                             ),
@@ -79,7 +79,7 @@ class _OnboardState extends State<Onboard> {
                     height: 70,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Color(0xFF19D784), Color(0xFF16A886)],
+                        colors: [Color(0xFF5B9EE1), Color(0xFF5B9EE1)],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ),
